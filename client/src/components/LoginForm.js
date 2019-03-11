@@ -1,5 +1,7 @@
 import React, {Component} from "react";
+import {withRouter} from "react-router-dom";
 import UserContext from "../context/UserContext";
+import Auth from "../utils/Auth";
 
 class LoginForm extends Component {
 	static contextType = UserContext;
@@ -18,7 +20,10 @@ class LoginForm extends Component {
 		e.preventDefault();
 		const {username, password} = this.state;
 		if (username && password) {
-			this.context.login(username, password);
+			Auth.logIn(username, password, (user) => {
+				this.context.setUser(user);
+				this.props.history.push("/");
+			});
 		}
 	}
 
@@ -43,4 +48,4 @@ class LoginForm extends Component {
 	}
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);
