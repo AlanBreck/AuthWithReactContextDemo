@@ -20,8 +20,8 @@ class LoginForm extends Component {
 		e.preventDefault();
 		const {username, password} = this.state;
 		if (username && password) {
-			Auth.logIn(username, password, (user) => {
-				this.context.setUser(user);
+			Auth.logIn(username, password, (response) => {
+				this.context.setUser(response);
 				this.props.history.push("/");
 			});
 		}

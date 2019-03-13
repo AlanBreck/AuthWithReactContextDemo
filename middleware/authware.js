@@ -5,7 +5,7 @@ const config = require("../config.json");
 const protectedPaths = ["/api/protected"];
 
 module.exports = function (req, res, next) {
-    if (!protectedPaths.includes(req.path)) next();
+    if (!protectedPaths.includes(req.path)) return next();
     try {
         const { authorization } = req.headers;
         if (!authorization) throw new Error();
