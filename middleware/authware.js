@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const bycrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../config.json");
 
@@ -12,6 +11,7 @@ module.exports = function (req, res, next) {
         if (!authorization) throw new Error();
         const token = authorization.replace("Bearer ", "");
         const decoded = jwt.verify(token, config.jwtSecret);
+        
         User.find({ id: decoded.data })
             .then(function (user) {
                 req.user = user;

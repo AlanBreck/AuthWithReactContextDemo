@@ -1,3 +1,5 @@
+// Mocking out a Model that queries a database.
+
 const users = require("../utils/users-generator")();
 const User = {
     find: function (params) {
