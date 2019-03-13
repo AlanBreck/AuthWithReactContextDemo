@@ -1,11 +1,19 @@
 const users = require("../utils/users-generator")();
-console.log(users);
 const User = {
-    find: function (condition) {
+    find: function (params) {
         return new Promise(function (resolve, reject) {
-            const match = users.find(user => user.username === condition.username);
+            const fields = Object.keys(params);
+            const match = users.find(user => {
+                let isMatch = false;
+                for (let field of fields) {
+                    if (user[field] !== params[field]) return false;
+                    else isMatch = true;
+                }
+                return isMatch;
+            });
             setTimeout(function () {
-                resolve(match);
+                if (match) resolve(match);
+                else reject({ message: "No match." });
             }, 1000);
         });
     }
